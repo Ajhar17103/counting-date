@@ -1,0 +1,56 @@
+  #init 
+  
+  
+  const [timerDay,SetTimerDays] = useState();
+  const [timerHours,setTimerHours] = useState();
+  const [timerMinutes,setTimerMinutes] = useState();
+  const [timerSeconds, setTimerSeconds] = useState();
+  let interval;
+
+#impl
+  const startTimer=()=>{
+    const countdownDate= new Date("Feb 28, 2022").getTime();
+    interval=setInterval(()=>{
+        const now = new Date().getTime();
+        const distance = countdownDate - now
+        const days = Math.floor( distance / (24 * 60 * 60 * 1000 ));
+
+        const hours =  Math.floor( (distance % ( 24 * 60 * 60 * 1000 )) / ( 1000 * 60 * 60 ));
+
+        const minutes = Math.floor( (distance % ( 60 * 60 * 1000 )) / ( 1000 * 60  ));
+
+        const seconds = Math.floor( ( distance % ( 60 * 1000) / 1000));
+
+        if(distance<0){
+           clearInterval(interval.current) 
+        }else{
+           SetTimerDays(days);
+           setTimerHours(hours);
+           setTimerMinutes(minutes);
+           setTimerSeconds(seconds)
+        }
+   });
+}
+
+useEffect(()=>{
+startTimer();
+})
+
+
+
+#Output
+
+
+  <div style={{ alignItems:'center'}}>
+                    <button style={{background:'black', color:'white', width:'80px'}} className='btn   btn-sm mr-2'   > {10<=timerDay ? timerDay:`0 ${timerDay}`}  <br/> Days</button>
+                    
+                   
+                               
+                    <button style={{background:'black', color:'white', }} className='btn btn-dark btn-sm mr-2'>{10<=timerHours ? timerHours:`0 ${timerHours}`} <br/> Hours</button>
+                    
+                          
+                          <button style={{background:'black', color:'white', }} className='btn btn-dark btn-sm mr-2'>{10<=timerMinutes ? timerMinutes:`0 ${timerMinutes}`} <br/> Minutes</button>
+                           
+        
+                          <button style={{background:'black', color:'white', }} className='btn btn-dark btn-sm '>{10<=timerSeconds ? timerSeconds :`0 ${timerSeconds}` } <br/> Seconds</button>
+                    </div> 
